@@ -47,7 +47,7 @@ Client.on("message", message => {
 
 		if (cmd_name == "call"){
 		  message.delete()
-		  const moi = message.author.username
+		  const moi = message.member.displayName
 		  let mention = message.mentions.members.first()                                                //Constante de mention @pseudo
 		  message.channel.send(":telephone: " + moi + " appelle " + mention.displayName)
 		  console.log( "\n Commande détectée : \n " + moi + " appelle " + mention.displayName)
