@@ -55,6 +55,7 @@ Client.on("message", message => {
 		const [cmd_name, ...args] = message.content.trim().substring(prefix.length).split(/\s+/)   //permet de détecter la commande après le hastag
 
 		if (cmd_name == "call"){
+<<<<<<< HEAD
 		  	message.delete()
 		  	const moi = message.member.displayName
 		  	let mention = message.mentions.members.first()                                                //Constante de mention @pseudo
@@ -63,6 +64,13 @@ Client.on("message", message => {
 			MessageEmbed(texte, imageA)
 			
 			console.log( "\n Commande détectée : \n " + moi + " appelle " + mention.displayName)
+=======
+		  message.delete()
+		  const moi = message.member.displayName
+		  let mention = message.mentions.members.first()                                                //Constante de mention @pseudo
+		  message.channel.send(":telephone: " + moi + " appelle " + mention.displayName)
+		  console.log( "\n Commande détectée : \n " + moi + " appelle " + mention.displayName)
+>>>>>>> 888cd2647ef6399324ace83ded1a00d9e4452111
 		}
 
         if(cmd_name == "insulte"){
@@ -121,4 +129,8 @@ Client.on("message", message => {
 		}
 	  }
 });
+<<<<<<< HEAD
 Client.login("ODA5NDE0NzI0MjQzNjg1NDc3.YCUwNA.YHv_3AlIeqnwA5w8R6L05LWz7qE");
+=======
+Client.login("ODA5NDE0NzI0MjQzNjg1NDc3.YCUwNA.YHv_3AlIeqnwA5w8R6L05LWz7qE"); 
+>>>>>>> 888cd2647ef6399324ace83ded1a00d9e4452111
