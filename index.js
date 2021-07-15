@@ -30,9 +30,8 @@ var salutEmbed = new Discord.MessageEmbed()
 	.setFooter('Par le meilleur dev du monde', 'https://static.wikia.nocookie.net/transformice/images/e/e8/Feu_de_camp.png/revision/latest?cb=20150305142054&path-prefix=fr');
 
 
-var embedDeux = new Discord.MessageEmbed()
-.setColor('#0099ff')
-.setFooter('Par le meilleur dev du monde', 'https://static.wikia.nocookie.net/transformice/images/e/e8/Feu_de_camp.png/revision/latest?cb=20150305142054&path-prefix=fr');
+
+
 //------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------
 
@@ -40,24 +39,38 @@ var embedDeux = new Discord.MessageEmbed()
 Client.on("message", message => {
     if(message.author.bot) return;              //si le message vient d'un bot, alors ne pas répondre
 	if(message.channel.type == "dm") return;
-    console.log("messages channels")           //Affichage de "message dans la console"
 
+	function MessageEmbed(texte, imageA){
+		var messageEmbed = new Discord.MessageEmbed()
+			.setColor('#317AC1')
+			.setThumbnail(imageA)
+			.setTitle(texte)
+			.setTimestamp()
+		message.channel.send(messageEmbed)
+	}
+	
+    console.log("messages channels")           //Affichage de "message dans la console"
+	
 	if(message.content.startsWith(prefix)){
 		const [cmd_name, ...args] = message.content.trim().substring(prefix.length).split(/\s+/)   //permet de détecter la commande après le hastag
 
 		if (cmd_name == "call"){
-		  message.delete()
-		  const moi = message.member.displayName
-		  let mention = message.mentions.members.first()                                                //Constante de mention @pseudo
-		  message.channel.send(":telephone: " + moi + " appelle " + mention.displayName)
-		  console.log( "\n Commande détectée : \n " + moi + " appelle " + mention.displayName)
+		  	message.delete()
+		  	const moi = message.member.displayName
+		  	let mention = message.mentions.members.first()                                                //Constante de mention @pseudo
+			var texte = moi + " appelle " + mention.displayName
+			var imageA = "https://icon-library.com/images/blue-phone-icon-png/blue-phone-icon-png-15.jpg"
+			MessageEmbed(texte, imageA)
+			
+			console.log( "\n Commande détectée : \n " + moi + " appelle " + mention.displayName)
 		}
 
         if(cmd_name == "insulte"){
 			message.delete()
             console.log("Commande détectée : \n insulte")
             let mention = message.mentions.members.first() 
-            message.channel.send("Mange tes morts " + mention.displayName)      //mettre des insultes random
+			var texte = "Mange tes morts " + mention.displayName
+			MessageEmbed(texte)      					//mettre des insultes random
         }
 
         if(cmd_name == "salut"){
@@ -69,7 +82,9 @@ Client.on("message", message => {
 
         if(cmd_name == "ping"){
             console.log("Commande détectée : \n ping pong")
-            message.channel.send("pong")
+			var texte = "poing"
+			var imageA = "https://images-ext-2.discordapp.net/external/ANnosOMq26IOX6r1aAafwclDbxoqmIua85LDssasvt4/https/media.tenor.com/images/882bb363d7bd62b9c6429f66d845d969/tenor.gif"
+			MessageEmbed(texte, imageA)
         }
 
 		if(cmd_name == "clear"){
@@ -106,4 +121,4 @@ Client.on("message", message => {
 		}
 	  }
 });
-Client.login("ODA5NDE0NzI0MjQzNjg1NDc3.YCUwNA.YHv_3AlIeqnwA5w8R6L05LWz7qE"); 
+Client.login("ODA5NDE0NzI0MjQzNjg1NDc3.YCUwNA.YHv_3AlIeqnwA5w8R6L05LWz7qE");
