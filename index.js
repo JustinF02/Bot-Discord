@@ -63,7 +63,7 @@ Client.on("message", message => {
 
         if(cmd_name == "insulte" || cmd_name == "Insulte"){
 			message.delete()
-            console.log("Commande détectée : \n insulte")
+            console.log(`Commande détectée : \n insulte par ${message.member.displayName}`)
             let mention = message.mentions.members.first() 
             message.channel.send("Mange tes morts " + mention.displayName)      //mettre des insultes random
         }
@@ -71,7 +71,7 @@ Client.on("message", message => {
         if(cmd_name == "salut" || cmd_name == "Salut"){
             message.delete()
             
-            console.log("Commande détectée : \n présentation bot")
+            console.log(`Commande détectée : \n présentation bot par ${message.member.displayName}`)
             message.channel.send(salutEmbed)
         }
 
@@ -80,7 +80,7 @@ Client.on("message", message => {
 			message.reply('Calcul du ping...').then((resultMessage) => {
 				ping = resultMessage.createdTimestamp - message.createdTimestamp
 			})
-			console.log(`Commande détectée : \n ping `)
+			console.log(`Commande détectée : \n ping par ${message.member.displayName}`)
 			var embedPing = new Discord.MessageEmbed()
 				.setColor("#A7001E")
 				.setDescription(`Latence du bot : ${ping} ms | Latence API : ${Client.ws.ping}`)
@@ -91,7 +91,7 @@ Client.on("message", message => {
         }
 
 		if(cmd_name == "clear" || cmd_name == "Clear"){
-			console.log("Commande détectée : \n clear")
+			console.log(`Commande détectée : \n clear par ${message.member.displayName}`)
 			if(message.member.permissions.has("MANAGE_MESSAGES")){
 				let args = message.content.split(" ");
 				if(args[1] == undefined){		//pas d'argument
@@ -113,6 +113,7 @@ Client.on("message", message => {
 						}
 						else{
 							message.reply("Vous ne pouvez pas supprimer plus de 10 messages")
+							console.log("Pas de suppression")
 						}
 					}
 				}
