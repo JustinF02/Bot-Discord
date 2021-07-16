@@ -35,13 +35,13 @@ fs.readdir("./commands/", (err, files) => {
 
 //#region détection de commandes
 Client.on("message", message => {
-
+try{
 	if((message.author.bot) || (message.channel.type == "dm") || !message.content.startsWith(prefix))return;
-	let messageArray = message.content.split(" ");
-    let cmd = messageArray[0];
-    let args = messageArray.slice(1);
-    let commandfile = bot.commands.get(cmd.slice(prefix.length));
-    if (commandfile) commandfile.run(bot, message, args);
+  let messageArray = message.content.split(" ");
+  let cmd = messageArray[0];
+  let args = messageArray.slice(1);
+  let commandfile = bot.commands.get(cmd.slice(prefix.length));
+  if (commandfile) commandfile.run(bot, message, args);
 
 	
 	if(message.content.startsWith(prefix)){
@@ -62,7 +62,11 @@ Client.on("message", message => {
 			message.channel.send(embedPing)
         }	
 	}
+}catch(err){
+  console.log(err);
+}
 });
+
 //#endregion
 
 Client.login("ODA5NDE0NzI0MjQzNjg1NDc3.YCUwNA.YHv_3AlIeqnwA5w8R6L05LWz7qE"); 

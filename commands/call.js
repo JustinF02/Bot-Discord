@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
+  try{
     message.delete()
     const moi = message.member.displayName
     let mention = message.mentions.members.first()                                                //Constante de mention @pseudo
@@ -12,7 +13,9 @@ module.exports.run = async (bot, message, args) => {
         .setDescription("Vous devriez répondre au plus vite.")
 
     message.channel.send(embedCall)
-
+  }catch(err){
+    console.log(err);
+  }
 }
 
 module.exports.help = {

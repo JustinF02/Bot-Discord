@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
     console.log(`Commande détectée : \n clear par ${message.member.displayName}`)
+	try{
 			if(message.member.permissions.has("MANAGE_MESSAGES")){
 				let args = message.content.split(" ");
 				if(args[1] == undefined){		//pas d'argument
@@ -16,7 +17,7 @@ module.exports.run = async (bot, message, args) => {
 						number = number +1
 						if(number <= 11){
 							message.channel.bulkDelete(number).then(messages => {
-								console.log(messages.size + " messages supprimés ! (dont celui appelant)")
+								console.log(messages.size-1 + " messages supprimés ")
 							}).catch(err => {
 								console.log("erreur de clear :" + err);
 							})
@@ -32,6 +33,9 @@ module.exports.run = async (bot, message, args) => {
 				message.reply("Vous n'avez pas la permission !")
 				console.log("Un utilisateur a tenté de supprimer des messages sans autorisation.")
 			}
+		}catch(err){
+			console.log(err);
+		}
 		}
         
 module.exports.help = {
