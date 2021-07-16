@@ -1,10 +1,16 @@
+//#region biblio & préfixe
 const Discord = require("discord.js");
 const Client = new Discord.Client;
 const bot = new Discord.Client()
 const prefix = '$'
+//#endregion
+//#region client on démarrage
 Client.on("ready", () => {
     console.log("Bot opérationnel");
+	Client.user.setActivity("$salut", {type: 'LISTENING', url: 'https://open.spotify.com/'})
 });
+//#endregion
+//#region embed du Salut
 //------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------
 //Constante EMBED
@@ -19,8 +25,8 @@ var salutEmbed = new Discord.MessageEmbed()
 	.setThumbnail('https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png')
 	.addFields(
 		{ name: 'A quoi je sers ?', value: 'Je suis capable de vous donner moultes commandes afin d\'apporter du divertissement sur le serveur ! '},
-		{ name: 'ping', value: 'Pour voir si je répond !', inline: true },
-		{ name: 'insulte', value: 'Pour insulter en ping', inline: true },
+		{ name: 'ping', value: 'Ping client et API discord', inline: true },
+		{ name: 'insulte', value: 'Pour ... vous avez compris', inline: true },
         { name: 'call', value: 'Pour call un membre', inline : true},
 		{ name: 'clear', value: 'Pour clear MAX 10 msgs', inline : true},
 	)
@@ -29,73 +35,62 @@ var salutEmbed = new Discord.MessageEmbed()
 	.setTimestamp()
 	.setFooter('Par le meilleur dev du monde', 'https://static.wikia.nocookie.net/transformice/images/e/e8/Feu_de_camp.png/revision/latest?cb=20150305142054&path-prefix=fr');
 
-
-
-
 //------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------
-
-
+//#endregion
+//#region détection message + commandes
 Client.on("message", message => {
     if(message.author.bot) return;              //si le message vient d'un bot, alors ne pas répondre
 	if(message.channel.type == "dm") return;
+    console.log("message")           //Affichage de "message dans la console"
 
-	function MessageEmbed(texte, imageA){
-		var messageEmbed = new Discord.MessageEmbed()
-			.setColor('#317AC1')
-			.setThumbnail(imageA)
-			.setTitle(texte)
-			.setTimestamp()
-		message.channel.send(messageEmbed)
-	}
-	
-    console.log("messages channels")           //Affichage de "message dans la console"
-	
 	if(message.content.startsWith(prefix)){
 		const [cmd_name, ...args] = message.content.trim().substring(prefix.length).split(/\s+/)   //permet de détecter la commande après le hastag
 
-		if (cmd_name == "call"){
-<<<<<<< HEAD
-		  	message.delete()
-		  	const moi = message.member.displayName
-		  	let mention = message.mentions.members.first()                                                //Constante de mention @pseudo
-			var texte = moi + " appelle " + mention.displayName
-			var imageA = "https://icon-library.com/images/blue-phone-icon-png/blue-phone-icon-png-15.jpg"
-			MessageEmbed(texte, imageA)
-			
+		if (cmd_name == "call" || cmd_name == "Call"){
+			message.delete()
+			const moi = message.member.displayName
+			let mention = message.mentions.members.first()                                                //Constante de mention @pseudo
 			console.log( "\n Commande détectée : \n " + moi + " appelle " + mention.displayName)
-=======
-		  message.delete()
-		  const moi = message.member.displayName
-		  let mention = message.mentions.members.first()                                                //Constante de mention @pseudo
-		  message.channel.send(":telephone: " + moi + " appelle " + mention.displayName)
-		  console.log( "\n Commande détectée : \n " + moi + " appelle " + mention.displayName)
->>>>>>> 888cd2647ef6399324ace83ded1a00d9e4452111
+			var embedCall = new Discord.MessageEmbed()
+				.setColor("#317AC1")
+				.setTitle(moi + " appelle " + mention.displayName)
+				.setThumbnail("https://icon-library.com/images/blue-phone-icon-png/blue-phone-icon-png-15.jpg")
+				.setDescription("Vous devriez répondre au plus vite.")
+		
+			message.channel.send(embedCall)
 		}
 
-        if(cmd_name == "insulte"){
+        if(cmd_name == "insulte" || cmd_name == "Insulte"){
 			message.delete()
             console.log("Commande détectée : \n insulte")
             let mention = message.mentions.members.first() 
-			var texte = "Mange tes morts " + mention.displayName
-			MessageEmbed(texte)      					//mettre des insultes random
+            message.channel.send("Mange tes morts " + mention.displayName)      //mettre des insultes random
         }
 
-        if(cmd_name == "salut"){
+        if(cmd_name == "salut" || cmd_name == "Salut"){
             message.delete()
             
             console.log("Commande détectée : \n présentation bot")
             message.channel.send(salutEmbed)
         }
 
-        if(cmd_name == "ping"){
-            console.log("Commande détectée : \n ping pong")
-			var texte = "poing"
-			var imageA = "https://images-ext-2.discordapp.net/external/ANnosOMq26IOX6r1aAafwclDbxoqmIua85LDssasvt4/https/media.tenor.com/images/882bb363d7bd62b9c6429f66d845d969/tenor.gif"
-			MessageEmbed(texte, imageA)
+        if(cmd_name == "ping" || cmd_name == "Ping"){
+            var ping = 0
+			message.reply('Calcul du ping...').then((resultMessage) => {
+				ping = resultMessage.createdTimestamp - message.createdTimestamp
+			})
+			console.log(`Commande détectée : \n ping `)
+			var embedPing = new Discord.MessageEmbed()
+				.setColor("#A7001E")
+				.setDescription(`Latence du bot : ${ping} ms | Latence API : ${Client.ws.ping}`)
+				.setTitle("Reçu 5 sur 5 :sunglasses:")
+				.setThumbnail("https://images-ext-2.discordapp.net/external/ANnosOMq26IOX6r1aAafwclDbxoqmIua85LDssasvt4/https/media.tenor.com/images/882bb363d7bd62b9c6429f66d845d969/tenor.gif")
+			message.delete()
+			message.channel.send(embedPing)
         }
 
-		if(cmd_name == "clear"){
+		if(cmd_name == "clear" || cmd_name == "Clear"){
 			console.log("Commande détectée : \n clear")
 			if(message.member.permissions.has("MANAGE_MESSAGES")){
 				let args = message.content.split(" ");
@@ -129,8 +124,5 @@ Client.on("message", message => {
 		}
 	  }
 });
-<<<<<<< HEAD
-Client.login("ODA5NDE0NzI0MjQzNjg1NDc3.YCUwNA.YHv_3AlIeqnwA5w8R6L05LWz7qE");
-=======
+//#endregion
 Client.login("ODA5NDE0NzI0MjQzNjg1NDc3.YCUwNA.YHv_3AlIeqnwA5w8R6L05LWz7qE"); 
->>>>>>> 888cd2647ef6399324ace83ded1a00d9e4452111
