@@ -45,22 +45,28 @@ try{
 
 	
 	if(message.content.startsWith(prefix)){
-		const [cmd_name, ...args] = message.content.trim().substring(prefix.length).split(/\s+/)   //permet de détecter la commande après le hastag
+		const [cmd_name, ...args] = message.content.trim().substring(prefix.length).split(/\s+/)   //permet de séparer la commande du prefix
         
         if(cmd_name == "ping" || cmd_name == "Ping"){
             var ping = 0
-			message.reply('Calcul du ping...').then((resultMessage) => {
-				ping = resultMessage.createdTimestamp - message.createdTimestamp
-			})
-			console.log(`Commande détectée : \n ping par ${message.member.displayName}`)
-			var embedPing = new Discord.MessageEmbed()
-				.setColor("#A7001E")
-				.setDescription(`Latence du bot : ${ping} ms | Latence API : ${Client.ws.ping}`)
-				.setTitle("Reçu 5 sur 5 :sunglasses:")
-				.setThumbnail("https://images-ext-2.discordapp.net/external/ANnosOMq26IOX6r1aAafwclDbxoqmIua85LDssasvt4/https/media.tenor.com/images/882bb363d7bd62b9c6429f66d845d969/tenor.gif")
-			message.delete()
-			message.channel.send(embedPing)
-        }	
+            message.reply('Calcul du ping...').then((resultMessage) => {
+              ping = resultMessage.createdTimestamp - message.createdTimestamp
+            })
+            console.log(`Commande détectée : \n ping par ${message.member.displayName}`)
+            var embedPing = new Discord.MessageEmbed()
+              .setColor("#A7001E")
+              .setDescription(`Latence du bot : ${ping} ms | Latence API : ${Client.ws.ping}`)
+              .setTitle("Reçu 5 sur 5 :sunglasses:")
+              .setThumbnail("https://images-ext-2.discordapp.net/external/ANnosOMq26IOX6r1aAafwclDbxoqmIua85LDssasvt4/https/media.tenor.com/images/882bb363d7bd62b9c6429f66d845d969/tenor.gif")
+            message.delete()
+            message.channel.send(embedPing)
+        }
+        //commande avatar
+        if (cmd_name === 'avatar') {
+          const user = message.author;
+      
+          return message.channel.send(`${user.username}'s avatar: ${user.displayAvatarURL({ dynamic: true })}`);
+        }
 	}
 }catch(err){
   console.log(err);
