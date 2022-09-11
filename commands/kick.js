@@ -6,8 +6,10 @@ const {messageEmbed, Client} = require("discord.js")
 module.exports.run = (client, message, args) => {
     try{
     if(message.member.permissions.has("ADMINISTRATOR")){
-    let user = message.mentions.users.first();
+    let user = message.mentions.users.first();  //User is the one who's been kicked off
     let reason = args.splice(1).join(" ") || 'Aucune raison spécifiée';
+
+    //Test on User' presence
     user ? message.guild.member(user).kick(reason) : messsage.channel.send("L'utilisateur n'existe pas.")
 
     const embedKick = new messageEmbed()

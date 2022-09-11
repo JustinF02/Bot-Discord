@@ -6,12 +6,12 @@ module.exports.run = async (bot, message, args) => {
 			if(message.member.permissions.has("MANAGE_MESSAGES")){
 				let args = message.content.split(" ");
 				if(args[1] == undefined){		//pas d'argument
-					message.reply("Nombre de message non ou mal défini")	
+					message.reply("le nombre de message est mal ou non-défini.")
 				}
 				else{
 					let number = parseInt(args[1]);
 					if(isNaN(number)){			//is not a number
-						message.reply("Nombre de message non ou mal défini")
+						message.reply("l'argument n'est pas un nombre.")
 					}
 					else{
 						number = number +1
